@@ -1,6 +1,7 @@
-#root {
-  padding: 2rem;
+body, #root {
   text-align: center;
+    background-color: #202124;
+  color: #E8EAED; /* facultatif pour texte clair */
 }
 
 .logo {
