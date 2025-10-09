@@ -1,79 +1,13 @@
-import React, { useState } from "react";
-import { account, ID } from "./lib/appwrite";
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import { Login } from "./pages/login";
 
-const App = () => {
-  const [loggedInUser, setLoggedInUser] = useState(null);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+function App() {
+  // const [count, setCount] = useState(0);
 
-  async function login(email, password) {
-    await account.createEmailPasswordSession({
-      email,
-      password,
-    });
-    setLoggedInUser(await account.get());
-  }
-
-  return (
-    <div>
-      <p>
-        {loggedInUser ? `Logged in as ${loggedInUser.name}` : "Not logged in"}
-      </p>
-
-      <form>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-
-        <button type="button" onClick={() => login(email, password)}>
-          Login
-        </button>
-
-        <button
-          type="button"
-          onClick={async () => {
-            await account.create({
-              userId: ID.unique(),
-              email,
-              password,
-              name,
-            });
-            login(email, password);
-          }}
-        >
-          Register
-        </button>
-
-        <button
-          type="button"
-          onClick={async () => {
-            await account.deleteSession({
-              sessionId: "current",
-            });
-            setLoggedInUser(null);
-          }}
-        >
-          Logout
-        </button>
-      </form>
-    </div>
-  );
-};
+  return <Login />;
+}
 
 export default App;
