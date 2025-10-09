@@ -9,7 +9,7 @@ client
 export const account = new Account(client);
 export const databases = new Databases(client);
 
-export const databaseId = "68e772bc000eb302c746"; // remplace par l’ID de ta base
-export const collectionId = "utilisateurs"; // ex: "utilisateurs"
+export const databaseId = import.meta.env.VITE_APPWRITE_DATABASE_ID;
+export const collectionId = import.meta.env.VITE_APPWRITE_COLLECTION_ID;
 
 export default client;
