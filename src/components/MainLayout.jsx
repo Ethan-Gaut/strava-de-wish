@@ -19,7 +19,11 @@ const MainLayout = () => {
           {/* Logo/Brand */}
           <div className="flex items-center space-x-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <span className="text-sm font-bold">S2W</span>
+              <img
+                src="/Logo-strava-2-wish.png"
+                alt="Logo Strava 2 wish"
+                className="h-8 w-8 rounded-lg"
+              />
             </div>
             <span className="text-xl font-bold tracking-tight">
               Strava 2 wish
