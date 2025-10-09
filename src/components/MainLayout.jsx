@@ -10,6 +10,7 @@ const MainLayout = () => {
     { path: "/", label: "Accueil", icon: Home },
     { path: "/seances", label: "Séances", icon: Activity },
     { path: "/profil", label: "Profil", icon: User },
+    { path: "/login", label: "Se connecter", icon: User },
   ];
 
   return (
