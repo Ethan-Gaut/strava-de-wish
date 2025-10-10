@@ -1,11 +1,15 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { databases, databaseId, collectionId } from "../lib/appwrite";
 import { Query } from "appwrite";
 
 const Auth = createContext();
 
 export const AuthContext = ({ children }) => {
-  const [user, setUser] = useState(null);
+  // Récupération initiale depuis localStorage si présent
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
 
   const login = async (mail, mot_de_passe) => {
     try {
@@ -17,11 +21,11 @@ export const AuthContext = ({ children }) => {
       if (response.documents.length > 0) {
         const userDoc = response.documents[0];
         setUser(userDoc);
+        localStorage.setItem("user", JSON.stringify(userDoc)); // Stockage dans localStorage
         console.log("Connexion réussie :", userDoc);
         return { success: true, user: userDoc };
       } else {
-        console.log("test error ");
-        return { success: false, message: "mail ou mot de passe incorrect" };
+        return { success: false, message: "Mail ou mot de passe incorrect" };
       }
     } catch (err) {
       console.error("Erreur de connexion :", err);
@@ -31,7 +35,15 @@ export const AuthContext = ({ children }) => {
 
   const logout = () => {
     setUser(null);
+    localStorage.removeItem("user"); // Supprime l'utilisateur du localStorage
   };
+
+  // Optionnel : synchronisation avec localStorage si l'état change
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+  }, [user]);
 
   const contextValues = { login, logout, user };
 
