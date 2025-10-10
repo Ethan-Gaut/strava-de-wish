@@ -2,8 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Activity, BarChart2, User } from "lucide-react";
 import { Button } from "../components/ui/button";
+import { useAuth } from "../context/authContext";
 
 export const Accueil = () => {
+  const { user } = useAuth(); // Récupère l'utilisateur connecté
+
   return (
     <div className="min-h-screen bg-[#202124] text-white">
       {/* HERO SECTION */}
@@ -20,26 +23,28 @@ export const Accueil = () => {
           motivation et à progresser jour après jour.
         </p>
 
-        <div className="flex gap-4">
-          <Link to="/seances">
-            <Button
-              size="lg"
-              className="bg-[#10B981] hover:bg-[#0ea572] text-white font-semibold px-6 py-3 rounded-xl shadow-lg transition-all duration-300"
-            >
-              Voir mes séances
-            </Button>
-          </Link>
+        {user && ( // Affiche uniquement si l'utilisateur est connecté
+          <div className="flex gap-4">
+            <Link to="/seances">
+              <Button
+                size="lg"
+                className="bg-[#10B981] hover:bg-[#0ea572] text-white font-semibold px-6 py-3 rounded-xl shadow-lg transition-all duration-300"
+              >
+                Voir mes séances
+              </Button>
+            </Link>
 
-          <Link to="/profil">
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-[#10B981] text-[#10B981] hover:bg-[#10B981]/10 font-semibold px-6 py-3 rounded-xl transition-all duration-300"
-            >
-              Mon profil
-            </Button>
-          </Link>
-        </div>
+            <Link to="/profil">
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-[#10B981] text-[#10B981] hover:bg-[#10B981]/10 font-semibold px-6 py-3 rounded-xl transition-all duration-300"
+              >
+                Mon profil
+              </Button>
+            </Link>
+          </div>
+        )}
       </section>
 
       {/* FEATURES SECTION */}
