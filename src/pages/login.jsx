@@ -1,43 +1,69 @@
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
-import Authentification from "../components/Authentification";
 
 export const Login = () => {
-  const [mail, setMail] = useState("");
-  const [motDePasse, setMotDePasse] = useState("");
   const { login } = useAuth();
-  console.log("mail", mail);
-  console.log("mot de passe", motDePasse);
+  const navigate = useNavigate();
+
+  const [mail, setMail] = useState("");
+  const [mot_de_passe, setMotDePasse] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    login(formData.get("mail"), formData.get("mot_de_passe"));
+
+    const result = await login(mail, mot_de_passe);
+
+    if (result.success) {
+      navigate("/");
+    } else {
+      setError(result.message);
+    }
   };
 
   return (
-    <>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-3 max-w-sm mx-auto mt-10"
-      >
-        <input
-          type="email"
-          placeholder="Adresse mail"
-          name="mail"
-          required
-          onChange={(e) => setMail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Mot de passe"
-          name="mot_de_passe"
-          required
-          onChange={(e) => setMotDePasse(e.target.value)}
-        />
-        <button type="submit">Se connecter</button>
+    <div className="max-w-md mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Connexion</h1>
+
+      {error && (
+        <div className="mb-4 text-red-500 border border-red-300 p-2 rounded bg-red-50">
+          {error}
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label htmlFor="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            value={mail}
+            onChange={(e) => setMail(e.target.value)}
+            className="w-full border px-2 py-1"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="password">Mot de passe</label>
+          <input
+            id="password"
+            type="password"
+            value={mot_de_passe}
+            onChange={(e) => setMotDePasse(e.target.value)}
+            className="w-full border px-2 py-1"
+            required
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
+          Se connecter
+        </button>
       </form>
-      <Authentification />
-    </>
+    </div>
   );
 };
