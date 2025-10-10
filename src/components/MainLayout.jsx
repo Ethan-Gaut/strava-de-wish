@@ -14,18 +14,18 @@ const MainLayout = () => {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
+      <nav className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur">
+        <div className="container mx-auto flex h-20 items-center justify-between px-4">
           {/* Logo / Brand */}
-          <div className="flex items-center space-x-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center justify-center">
               <img
                 src="/Logo-strava-2-wish.png"
                 alt="Logo Strava 2 wish"
-                className="h-8 w-8 rounded-lg"
+                className="h-16 w-16 object-contain"
               />
             </div>
-            <span className="text-xl font-bold tracking-tight">
+            <span className="text-2xl font-bold tracking-tight text-gray-700">
               Strava 2 wish
             </span>
           </div>
@@ -34,7 +34,11 @@ const MainLayout = () => {
           <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => {
               const Icon = item.icon;
-              const isActive = location.pathname === item.path;
+
+              const isActive =
+                location.pathname === item.path ||
+                (item.path === "/seances" &&
+                  location.pathname.startsWith("/seances"));
 
               return (
                 <Button
@@ -44,7 +48,10 @@ const MainLayout = () => {
                   asChild
                   className="h-9"
                 >
-                  <Link to={item.path} className="flex items-center gap-2">
+                  <Link
+                    to={item.path}
+                    className="flex items-center gap-2 text-gray-700"
+                  >
                     <Icon className="h-4 w-4" />
                     {item.label}
                   </Link>
@@ -55,9 +62,13 @@ const MainLayout = () => {
 
           {/* Mobile Navigation */}
           <div className="flex md:hidden">
-            <Button variant="ghost" size="icon" className="h-9 w-9">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-9 w-9 text-gray-700"
+            >
               <svg
-                className="h-4 w-4"
+                className="h-5 w-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
