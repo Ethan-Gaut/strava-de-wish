@@ -1,26 +1,65 @@
-import React from "react";
-
-// Exemple de données
-const seances = [
-  { nom: "Footing matinal", distance: 5, temps: "00:25" },
-  { nom: "Séance vélo", distance: 20, temps: "01:10" },
-  { nom: "Natation", distance: 2, temps: "00:40" },
-  { nom: "Course fractionnée", distance: 8, temps: "00:50" },
-  { nom: "Yoga", distance: 0, temps: "01:00" },
-  { nom: "Randonnée", distance: 10, temps: "02:00" },
-];
+import React, { useEffect, useState } from "react";
+import { databases, databaseId, collectionSeancesId } from "../../lib/appwrite";
+import { useAuth } from "../../context/authContext";
+import { Query } from "appwrite";
 
 export const L_Seances = () => {
+  const [seances, setSeances] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const { user } = useAuth();
+
+  useEffect(() => {
+    const fetchSeances = async () => {
+      if (!user) {
+        setError("Utilisateur non connecté.");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await databases.listDocuments(
+          databaseId,
+          collectionSeancesId,
+          [
+            Query.equal("utilisateur_id", user.$id), // Filtre par utilisateur connecté
+          ]
+        );
+
+        setSeances(response.documents);
+      } catch (err) {
+        console.error("Erreur lors de la récupération :", err);
+        setError("Erreur lors du chargement des séances.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSeances();
+  }, [user]);
+
   return (
     <div className="min-h-screen bg-[#202124] text-white px-4 py-8">
       <h2 className="text-2xl font-bold text-[#10B981] mb-6 text-center">
         Mes Séances
       </h2>
 
+      {loading && <p className="text-center text-gray-400">Chargement...</p>}
+
+      {error && (
+        <div className="mb-4 text-red-500 border border-red-400 p-2 rounded bg-red-50 text-center">
+          {error}
+        </div>
+      )}
+
+      {!loading && seances.length === 0 && (
+        <p className="text-center text-gray-400">Aucune séance enregistrée.</p>
+      )}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {seances.map((seance, index) => (
+        {seances.map((seance) => (
           <div
-            key={index}
+            key={seance.$id}
             className="bg-[#1b1c1f] rounded-2xl shadow-lg p-6 flex flex-col gap-3 hover:scale-105 transition-transform duration-300"
           >
             <h3 className="text-lg font-bold text-[#1E3A8A]">{seance.nom}</h3>
