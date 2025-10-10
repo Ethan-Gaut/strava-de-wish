@@ -15,7 +15,7 @@ export const A_Seance = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#202124] text-white flex flex-col items-center justify-start px-4 pt-12">
+    <div className="min-h-screen bg-[#202124] text-white flex items-center justify-center px-4 py-12">
       <div className="bg-[#1b1c1f] rounded-2xl shadow-lg p-8 w-full max-w-md">
         <h2 className="text-2xl font-bold text-[#10B981] mb-6 text-center">
           Ajouter une Séance
