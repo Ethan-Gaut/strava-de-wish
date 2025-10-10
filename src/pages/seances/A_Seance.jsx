@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  databases,
-  databaseId,
-  collectionSeancesId,
-  collectionUserId,
-} from "../../lib/appwrite";
+import { databases, databaseId, collectionSeancesId } from "../../lib/appwrite";
 import { useAuth } from "../../context/authContext";
 
 export const A_Seance = () => {
@@ -28,7 +23,7 @@ export const A_Seance = () => {
       const response = await databases.createDocument(
         databaseId,
         collectionSeancesId,
-        collectionUserId,
+        "unique()",
         {
           nom: nomSeance,
           distance: parseFloat(distance),
