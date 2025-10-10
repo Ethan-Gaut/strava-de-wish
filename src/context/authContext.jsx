@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { databases, databaseId, collectionId } from "../lib/appwrite";
+import { databases, databaseId, collectionUserId } from "../lib/appwrite";
 import { Query } from "appwrite";
 
 const Auth = createContext();
@@ -13,10 +13,11 @@ export const AuthContext = ({ children }) => {
 
   const login = async (mail, mot_de_passe) => {
     try {
-      const response = await databases.listDocuments(databaseId, collectionId, [
-        Query.equal("mail", mail),
-        Query.equal("mot_de_passe", mot_de_passe),
-      ]);
+      const response = await databases.listDocuments(
+        databaseId,
+        collectionUserId,
+        [Query.equal("mail", mail), Query.equal("mot_de_passe", mot_de_passe)]
+      );
 
       if (response.documents.length > 0) {
         const userDoc = response.documents[0];

@@ -9,6 +9,7 @@ import { L_Seances } from "./pages/seances/L_Seances";
 import { Seances } from "./pages/seances/Seances";
 import { Login } from "./pages/Login";
 import { useAuth } from "./context/authContext";
+import { SignUp } from "./pages/SignUp";
 
 // Composant pour protéger les routes
 const PrivateRoute = ({ children }) => {
@@ -24,6 +25,7 @@ function App() {
         {/* Routes publiques */}
         <Route path="/" element={<Accueil />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
 
         {/* Routes protégées */}
         <Route

@@ -1,22 +1,12 @@
+import { useAuth } from "../context/authContext";
 import React, { useState } from "react";
 
-// Exemple de données utilisateur
-const userData = {
-  nom: "Jean",
-  prenom: "Dupont",
-  email: "jean.dupont@example.com",
-  avatar: "/avatar-placeholder.png", // remplace par ton image
-  stats: {
-    seances: 12,
-    distance: 75, // km
-    temps: 450, // min
-  },
-};
-
 export const Profil = () => {
-  const [nom, setNom] = useState(userData.nom);
-  const [prenom, setPrenom] = useState(userData.prenom);
-  const [email, setEmail] = useState(userData.email);
+  const [nom, setNom] = useState("");
+  const [prenom, setPrenom] = useState("");
+  const [email, setEmail] = useState("");
+
+  const { user } = useAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,13 +19,7 @@ export const Profil = () => {
     <div className="min-h-screen bg-[#202124] text-white px-4 py-8">
       <div className="max-w-4xl mx-auto bg-[#1b1c1f] rounded-2xl shadow-lg p-8 flex flex-col md:flex-row items-center gap-8">
         {/* Avatar */}
-        <div className="flex-shrink-0">
-          <img
-            src={userData.avatar}
-            alt="Avatar"
-            className="h-32 w-32 rounded-full border-4 border-[#10B981] object-cover"
-          />
-        </div>
+        <div className="flex-shrink-0"></div>
 
         {/* Infos utilisateur */}
         <div className="flex-1 text-center md:text-left">
@@ -50,7 +34,7 @@ export const Profil = () => {
                 <label className="block text-gray-300 mb-1">Prénom</label>
                 <input
                   type="text"
-                  value={prenom}
+                  value={user.prenom}
                   onChange={(e) => setPrenom(e.target.value)}
                   className="w-full px-4 py-2 rounded-lg bg-[#202124] border border-gray-600 text-white focus:border-[#10B981] outline-none transition"
                   required
@@ -60,7 +44,7 @@ export const Profil = () => {
                 <label className="block text-gray-300 mb-1">Nom</label>
                 <input
                   type="text"
-                  value={nom}
+                  value={user.nom}
                   onChange={(e) => setNom(e.target.value)}
                   className="w-full px-4 py-2 rounded-lg bg-[#202124] border border-gray-600 text-white focus:border-[#10B981] outline-none transition"
                   required
@@ -72,7 +56,7 @@ export const Profil = () => {
               <label className="block text-gray-300 mb-1">Email</label>
               <input
                 type="email"
-                value={email}
+                value={user.mail}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-2 rounded-lg bg-[#202124] border border-gray-600 text-white focus:border-[#10B981] outline-none transition"
                 required
