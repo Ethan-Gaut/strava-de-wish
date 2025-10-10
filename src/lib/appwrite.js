@@ -12,7 +12,7 @@ export const databases = new Databases(client);
 export const databaseId = import.meta.env.VITE_APPWRITE_DATABASE_ID;
 export const collectionUserId = import.meta.env
   .VITE_APPWRITE_COLLECTION_UTILISATEURS_ID;
-export const collectionSeanceId = import.meta.env
+export const collectionSeancesId = import.meta.env
   .VITE_APPWRITE_COLLECTION_SEANCES_ID;
 
 export default client;
