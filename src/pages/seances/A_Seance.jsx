@@ -19,6 +19,20 @@ export const A_Seance = () => {
       return;
     }
 
+    // Validation des champs
+    const distanceNum = parseFloat(distance);
+    const tempsRegex = /^([0-9]{1,2}):([0-5][0-9])$/; // format hh:mm
+
+    if (isNaN(distanceNum) || distanceNum <= 0) {
+      setError("Veuillez entrer une distance valide (nombre uniquement).");
+      return;
+    }
+
+    if (!tempsRegex.test(temps)) {
+      setError("Veuillez entrer un temps valide au format hh:mm (ex: 00:25).");
+      return;
+    }
+
     try {
       const response = await databases.createDocument(
         databaseId,
@@ -26,9 +40,9 @@ export const A_Seance = () => {
         "unique()",
         {
           nom: nomSeance,
-          distance: parseFloat(distance),
+          distance: distanceNum,
           temps: temps,
-          utilisateur_id: user.$id, // si tu stockes l'utilisateur avec l'id
+          utilisateur_id: user.$id,
         }
       );
 
@@ -42,6 +56,22 @@ export const A_Seance = () => {
       console.error("Erreur lors de l'ajout :", err);
       setError("Erreur lors de l'ajout de la séance.");
       setSuccess("");
+    }
+  };
+
+  // Empêche d’écrire autre chose que des chiffres et un seul point pour la distance
+  const handleDistanceChange = (e) => {
+    const value = e.target.value;
+    if (/^[0-9]*\.?[0-9]*$/.test(value)) {
+      setDistance(value);
+    }
+  };
+
+  // Empêche d’écrire autre chose que chiffres et ":" pour le temps
+  const handleTempsChange = (e) => {
+    const value = e.target.value;
+    if (/^[0-9:]*$/.test(value)) {
+      setTemps(value);
     }
   };
 
@@ -82,10 +112,9 @@ export const A_Seance = () => {
               Distance parcourue (km)
             </label>
             <input
-              type="number"
-              step="0.1"
+              type="text"
               value={distance}
-              onChange={(e) => setDistance(e.target.value)}
+              onChange={handleDistanceChange}
               placeholder="Ex: 5.2"
               className="w-full px-4 py-2 rounded-lg bg-[#202124] border border-gray-600 text-white focus:border-[#10B981] outline-none transition"
               required
@@ -99,8 +128,9 @@ export const A_Seance = () => {
             <input
               type="text"
               value={temps}
-              onChange={(e) => setTemps(e.target.value)}
+              onChange={handleTempsChange}
               placeholder="Ex: 00:25"
+              maxLength={5}
               className="w-full px-4 py-2 rounded-lg bg-[#202124] border border-gray-600 text-white focus:border-[#10B981] outline-none transition"
               required
             />
