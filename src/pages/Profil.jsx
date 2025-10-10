@@ -32,7 +32,6 @@ export const Profil = () => {
         <div className="flex-shrink-0">
           <img
             src={userData.avatar}
-            alt="Avatar"
             className="h-32 w-32 rounded-full border-4 border-[#10B981] object-cover"
           />
         </div>

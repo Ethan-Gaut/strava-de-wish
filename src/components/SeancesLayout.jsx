@@ -13,7 +13,7 @@ export const SeancesLayout = () => {
   return (
     <div className="bg-[#202124] text-[#E8EAED] min-h-screen">
       {/* Sidebar fixe juste en dessous de la navbar */}
-      <aside className="fixed top-16 left-0 w-48 h-[calc(100vh-4rem)] border-r border-white bg-[#202124] p-4">
+      <aside className="fixed top-20 left-0 w-48 h-[calc(100vh-4rem)] border-r border-white bg-[#202124] p-4">
         <h2 className="mb-4 text-lg font-bold">Séances</h2>
         <nav className="flex flex-col space-y-2">
           {navItems.map((item) => {
