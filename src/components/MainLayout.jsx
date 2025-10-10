@@ -18,16 +18,18 @@ const MainLayout = () => {
         <div className="container mx-auto flex h-20 items-center justify-between px-4">
           {/* Logo / Brand */}
           <div className="flex items-center space-x-2">
-            <img
-              src="/Logo-strava-2-wish.png"
-              alt="Logo Strava 2 Wish"
-              className="h-16 w-16 object-contain"
-            />
-            <h1 className="flex items-center space-x-1 text-2xl font-bold tracking-tight">
-              <span className="text-[#1E3A8A]">Strava</span>
-              <span className="text-[#202124]">2</span>
-              <span className="text-[#10B981]">Wish</span>
-            </h1>
+            <Link to="/" className="flex items-center space-x-2">
+              <img
+                src="/Logo-strava-2-wish.png"
+                alt="Logo Strava 2 Wish"
+                className="h-16 w-16 object-contain"
+              />
+              <h1 className="flex items-center space-x-1 text-2xl font-bold tracking-tight">
+                <span className="text-[#1E3A8A]">Strava</span>
+                <span className="text-[#202124]">2</span>
+                <span className="text-[#10B981]">Wish</span>
+              </h1>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
